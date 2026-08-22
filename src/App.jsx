@@ -784,7 +784,7 @@ export default function App() {
                 Core Expertise in <span className="italic font-normal text-terracotta">Oxygen Ites</span>
               </h2>
               <p className="text-base md:text-lg text-forest/75 font-sans">
-                Currently working as a **Digital Marketing (SEO Analyst)** at **Oxygen Ites Pvt Ltd** (July 2024 - Present).
+                Currently working as a Digital Marketing (SEO Analyst) at Oxygen Ites Pvt Ltd (July 2024 - Present).
                 My responsibility is divided into three key verticals: Search Engine Optimization, Content Strategy, and Responsive UX Layout Auditing.
               </p>
             </div>
@@ -1020,7 +1020,7 @@ export default function App() {
                       { name: "Google Analytics", desc: "User acquisition flow & behavior monitoring" },
                       { name: "Google Search Console", desc: "Index monitoring, crawl fixes & sitemap checks" },
                       { name: "SEMrush", desc: "Keyword gaps, backlink research & domain analysis" },
-                      { name: "Ahrefs (Basic)", desc: "Competitive audits, keyword planner extraction" },
+                      { name: "Ahrefs", desc: "Competitive audits, keyword planner extraction" },
                       { name: "Keyword Planner", desc: "Search density modeling & bid estimation" },
                       { name: "Answer the Public", desc: "Intent questions and editorial outlines mapping" }
                     ].map((tool, idx) => (
