@@ -324,7 +324,7 @@ export default function App() {
                 Impact &amp; <span className="italic font-normal text-terracotta">Achievements</span>
               </h2>
               <p className="text-base md:text-lg text-forest/75 font-sans leading-relaxed">
-                Measurable growth, organic keyword breakthroughs, and high-ROI campaigns delivered across diverse digital verticals.
+                WhiteScholars — Growth & Achievements Key growth milestones and measurable results from my digital marketing journey at WhiteScholars.
               </p>
             </AnimatedContent>
           </div>
