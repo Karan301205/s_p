@@ -24,7 +24,8 @@ import {
   FileText,
   Star,
   Trophy,
-  Target
+  Target,
+  Linkedin
 } from 'lucide-react';
 
 export default function App() {
@@ -1270,6 +1271,22 @@ export default function App() {
                       <p className="text-sm font-bold text-forest">Karwan, Puranapool, Hyderabad, India</p>
                     </div>
                   </div>
+
+                  <a
+                    href="https://linkedin.com/in/s-anusha-160848333"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex gap-4 items-center group w-fit"
+                    aria-label="Visit LinkedIn profile of Anusha Sirigiri"
+                  >
+                    <div className="w-12 h-12 rounded-full border border-stoneBorder bg-alabaster flex items-center justify-center text-sage group-hover:text-terracotta group-hover:border-terracotta transition-colors duration-300">
+                      <Linkedin className="w-5 h-5" strokeWidth={1.5} />
+                    </div>
+                    <div>
+                      <h5 className="text-xs uppercase tracking-widest text-sage font-semibold font-sans">LinkedIn</h5>
+                      <p className="text-sm font-bold text-forest group-hover:text-terracotta transition-colors">linkedin.com/in/s-anusha-160848333</p>
+                    </div>
+                  </a>
                 </div>
               </AnimatedContent>
             </div>
@@ -1379,7 +1396,16 @@ export default function App() {
               {/* Copyright & Signoff */}
               <div className="text-center md:text-right">
                 <p className="text-sm font-serif text-forest font-bold mb-1">Anusha Sirigiri</p>
-                <p className="text-xs text-sage tracking-wider">© 2026. Made with React & Tailwind. All rights reserved.</p>
+                <p className="text-xs text-sage tracking-wider mb-2">© 2026. Made with React & Tailwind. All rights reserved.</p>
+                <a
+                  href="https://linkedin.com/in/s-anusha-160848333"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-xs text-sage hover:text-terracotta transition-colors tracking-wider"
+                >
+                  <Linkedin className="w-3 h-3" />
+                  <span>linkedin.com/in/s-anusha-160848333</span>
+                </a>
               </div>
 
             </div>
