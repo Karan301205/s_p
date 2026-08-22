@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import CatLoader from './components/CatLoader';
+import VideoLoader from './components/VideoLoader';
 import AnimatedContent from './components/AnimatedContent';
 import ScrollStack, { ScrollStackItem } from './components/ScrollStack';
 import {
@@ -29,21 +29,8 @@ import {
 } from 'lucide-react';
 
 export default function App() {
-  // Loader state (lasts for 3 seconds)
+  // Video Intro / Loader state (transitions after 9 seconds)
   const [isLoading, setIsLoading] = useState(true);
-  const [isFadingOut, setIsFadingOut] = useState(false);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsFadingOut(true);
-      const removeTimer = setTimeout(() => {
-        setIsLoading(false);
-      }, 500);
-      return () => clearTimeout(removeTimer);
-    }, 3000);
-
-    return () => clearTimeout(timer);
-  }, []);
 
   // Mobile menu state
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -108,8 +95,8 @@ export default function App() {
   return (
     <div className="relative min-h-screen bg-alabaster text-forest font-sans overflow-x-hidden">
 
-      {/* Initial Sleeping Cat Loader (3 seconds) */}
-      {isLoading && <CatLoader fadeOut={isFadingOut} />}
+      {/* Initial Video Intro Loader (9s with smooth transition) */}
+      {isLoading && <VideoLoader onComplete={() => setIsLoading(false)} />}
 
       {/* 1. MANDATORY PAPER GRAIN TEXTURE OVERLAY */}
       <div
