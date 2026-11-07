@@ -240,7 +240,7 @@ export default function App() {
               <p className="text-lg md:text-xl text-forest/80 font-sans leading-relaxed max-w-xl mb-10">
                 Anusha Sirigiri is a results-driven digital specialist based in Hyderabad.
                 She craft SEO-friendly campaigns, refines content models, and engineers modern search visibility
-                to drive user-centered, sustainable growth.
+                to drive user-centered, sustainable growth. 
               </p>
             </AnimatedContent>
 
@@ -1376,7 +1376,7 @@ export default function App() {
               <div className="max-w-md text-center md:text-left bg-alabaster/40 border border-stoneBorder/45 p-5 rounded-2xl">
                 <span className="text-[10px] uppercase tracking-widest text-sage font-semibold block mb-1">Formal Declaration</span>
                 <p className="text-[11px] text-forest/65 italic leading-relaxed">
-                  "I hereby declare that the information provided is true to the best of my knowledge." — Anusha Sirigiri
+                  "I hereby declare that the information provided is true to the best of my knowledge." : Anusha Sirigiri
                 </p>
               </div>
 
