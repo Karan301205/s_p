@@ -25,8 +25,210 @@ import {
   Star,
   Trophy,
   Target,
-  Linkedin
+  Linkedin,
+  Megaphone,
+  BarChart3,
+  Palette,
+  Bot,
+  Presentation
 } from 'lucide-react';
+
+// Impact & Achievements cards (rendered as a scroll stack)
+const BADGE_TONES = {
+  terracotta: { badge: 'bg-terracotta/10 border border-terracotta/20 text-terracotta', tag: 'bg-terracotta/10 text-terracotta' },
+  sage: { badge: 'bg-sage/15 border border-sage/30 text-forest', tag: 'bg-sage/15 text-forest' },
+  forest: { badge: 'bg-forest/10 border border-forest/20 text-forest', tag: 'bg-forest/10 text-forest' },
+  dark: { badge: 'bg-forest text-alabaster', tag: 'bg-forest/10 text-forest' },
+};
+
+const ACHIEVEMENTS = [
+  {
+    tone: 'dark',
+    icon: Sparkles,
+    iconClass: 'text-terracotta',
+    label: 'Key Achievement',
+    metric: '2x Revenue Growth',
+    tag: 'Google Ads Led',
+    title: 'Doubled Revenue at WhiteScholars',
+    text: 'Contributed to doubling revenue through digital marketing and paid campaign initiatives, including Google Ads campaign planning, management and optimization.',
+    pills: ['Google Ads Planning & Optimization', 'Lead-Generation Focus', 'Paid Campaign Initiatives'],
+  },
+  {
+    tone: 'terracotta',
+    icon: Trophy,
+    label: 'Keyword Dominance',
+    metric: '1st Position',
+    tag: '#1 on Google SERP',
+    title: 'Data Analytics Course in Hyderabad',
+    text: 'Moved the “Data Analytics Course in Hyderabad” keyword from the Top 10 to #1 position within 6 months through SEO, content optimization, local SEO and backlink strategies.',
+    pills: ['Top 10 → #1 Position', '6 Months Timeline', 'Local SEO & Backlinks'],
+  },
+  {
+    tone: 'sage',
+    icon: TrendingUp,
+    iconClass: 'text-sage',
+    label: 'Search Expansion',
+    metric: '1.7K Organic Traffic',
+    tag: '1600%+ Growth',
+    title: 'Organic Traffic Growth in One Year',
+    text: 'Grew website organic traffic from approximately 100 to 1.7K within one year through keyword strategy, content optimization, technical SEO and continuous search performance improvements.',
+    pills: ['100 → 1.7K Monthly Visits', '1 Year Trajectory', 'Technical SEO & Content'],
+  },
+  {
+    tone: 'forest',
+    icon: Globe,
+    iconClass: 'text-sage',
+    label: 'Domain Authority',
+    metric: 'DR 9 → DR 31',
+    tag: '3X Authority Surge',
+    title: 'Domain Rating Growth',
+    text: "Improved the website's Domain Rating from 9 to 27 through a focused backlink-building and off-page SEO strategy.",
+    pills: ['+200% Authority Growth', 'High-Quality Backlinks', 'Off-Page SEO Strategy'],
+  },
+  {
+    tone: 'terracotta',
+    icon: Users,
+    label: 'Social Proof & Local Pack',
+    metric: '600+ Google Reviews',
+    tag: '5X Review Growth',
+    title: 'Google Business Profile Reviews',
+    text: "Helped grow the Google Business Profile from 100+ reviews to 500+ reviews, strengthening the brand's local search presence and online reputation.",
+    pills: ['100+ → 500+ Reviews', 'Google Business Profile', 'Local Search Authority'],
+  },
+  {
+    tone: 'sage',
+    icon: Star,
+    iconClass: 'text-terracotta fill-terracotta',
+    label: 'Reputation & Trust',
+    metric: '4.7★ → 4.8★ Rating',
+    tag: 'High Customer Trust',
+    title: 'Google Business Profile Rating',
+    text: 'Contributed to improving the Google Business Profile rating from 4.7 to 4.8 stars while maintaining a strong review acquisition and reputation strategy.',
+    pills: ['4.8 Star Sentiment', 'Review Acquisition Strategy', 'Brand Sentiment'],
+  },
+  {
+    tone: 'forest',
+    icon: Target,
+    iconClass: 'text-forest',
+    label: 'Competitive Search',
+    metric: 'Top 10 Rankings',
+    tag: 'Tech Keyword Cluster',
+    title: 'Data Science & Digital Marketing Keywords',
+    text: 'Improved the search visibility of Data Science and Digital Marketing course-related keywords, achieving Top 10 rankings in a competitive Hyderabad market.',
+    pills: ['Data Science & Digital Marketing', 'Competitive Market', 'SERP Visibility'],
+  },
+  {
+    tone: 'terracotta',
+    icon: ArrowUpRight,
+    label: 'Paid Search & ROAS',
+    metric: '₹60K → ₹1.2L',
+    tag: '2X ROAS',
+    title: 'Google Ads Campaign Returns',
+    text: 'Started working on Google Ads campaigns with approximately ₹60,000 in ad spend and generated ₹1,20,000 in returns, delivering approximately 2X ROAS, based on tracked campaign results.',
+    pills: ['₹60K Ad Spend', '₹1,20,000 Returns', '2X ROAS Efficiency'],
+  },
+  {
+    tone: 'dark',
+    icon: Users,
+    iconClass: 'text-sage',
+    label: 'Leadership & Scaling',
+    metric: 'Solo → Team of 5',
+    tag: 'Leadership Growth',
+    title: 'From Solo SEO to a Team of 5',
+    text: 'Started at WhiteScholars as the sole SEO Analyst, managing the SEO function independently. As the digital marketing function grew, progressed into a leadership role and now work with a 5-member digital marketing team, including myself.',
+    pills: ['WhiteScholars SEO Lead', '5-Member Marketing Team', 'Mentorship & Management'],
+  },
+];
+
+// WhiteScholars (current role) responsibilities, grouped
+const WHITESCHOLARS_FOCUS = [
+  {
+    icon: Users,
+    title: 'Strategy & Team Leadership',
+    points: [
+      'Plan and manage digital marketing across SEO, local SEO, online reputation management and paid campaigns.',
+      'Lead and coordinate the digital marketing team: assign work, review execution and support performance.',
+      'Coordinate with internal teams to align marketing activities with lead-generation and business goals.',
+    ],
+  },
+  {
+    icon: Megaphone,
+    title: 'Paid Campaigns',
+    points: [
+      'Plan, manage and optimize Google Ads lead-generation campaigns, improving targeting, keywords, ad copy and conversions.',
+      'Support Meta Ads campaign planning, execution and performance monitoring.',
+    ],
+  },
+  {
+    icon: Search,
+    title: 'SEO & Local Visibility',
+    points: [
+      'Manage website SEO: keyword research, on-page and technical improvements, content optimization, internal linking and backlinks.',
+      'Manage Google Business Profile updates, posts, photos, review responses and local visibility.',
+      'Build online reputation and brand visibility on Quora, Reddit and LinkedIn.',
+    ],
+  },
+  {
+    icon: Presentation,
+    title: 'Digital Marketing Training',
+    points: [
+      'Conduct Digital Marketing training sessions, explaining concepts with practical examples and activities.',
+      'Support learner assessments.',
+    ],
+  },
+];
+
+const TOOLS_AND_TECH = [
+  { icon: Search, category: 'SEO & Research', tools: ['Google Search Console', 'SEMrush', 'Ahrefs', 'Google Keyword Planner'] },
+  { icon: Megaphone, category: 'Paid Advertising', tools: ['Google Ads', 'Meta Ads Manager'] },
+  { icon: BarChart3, category: 'Analytics & Reporting', tools: ['Google Analytics 4 (GA4)', 'Google Tag Manager', 'Looker Studio'] },
+  { icon: Palette, category: 'Website & Creative', tools: ['WordPress', 'Canva'] },
+  { icon: Bot, category: 'AI Tools', tools: ['ChatGPT', 'Gemini', 'Perplexity'] },
+];
+
+const CORE_SKILLS = [
+  { group: 'Digital Marketing', skills: ['SEO', 'Local SEO', 'Google Business Profile', 'ORM', 'Content Strategy', 'Google Ads', 'Meta Ads', 'Lead Generation'] },
+  { group: 'Management', skills: ['Team Coordination', 'Campaign Planning', 'Performance Monitoring', 'Reporting', 'Training & Mentoring'] },
+  { group: 'SEO & Performance', skills: ['Keyword Research', 'On-page SEO', 'Technical SEO', 'Off-page SEO', 'Link Building', 'Campaign Optimization'] },
+];
+
+const EDUCATION = [
+  {
+    period: '2024 – 2026',
+    status: 'Completed',
+    score: 'CGPA: 86%',
+    degree: 'MBA – Marketing',
+    school: 'Avanthi Institute of Engineering & Technology',
+    note: 'Postgraduate specialization in Marketing, completed alongside full-time digital marketing roles, pairing marketing theory with live SEO and paid campaign work.',
+    dot: 'bg-terracotta',
+  },
+  {
+    period: '2021 – 2024',
+    score: 'CGPA: 82%',
+    degree: 'Bachelor of Commerce – Computer Applications',
+    school: 'Indira Priyadarshini Government Degree College for Women',
+    note: 'Acquired functional insights in market economics, business accounts, and digital administration, mapping out commercial methodologies.',
+    dot: 'bg-forest',
+  },
+  {
+    period: '2019 – 2021',
+    score: 'CGPA: 82%',
+    degree: 'Intermediate Education',
+    school: 'Mahaboobia Junior College for Girls',
+    note: 'Completed higher secondary coursework with distinction, focusing on trade principles and organizational coordination.',
+    dot: 'bg-sage',
+  },
+  {
+    period: '2019 Graduation',
+    score: 'CGPA: 72%',
+    degree: 'Secondary School Certificate',
+    school: 'Prabodh Girls High School',
+    note: 'Completed basic secondary education syllabus with excellent performance across scientific and linguistic branches.',
+    dot: 'bg-clay',
+  },
+];
+
+const pad2 = (n) => String(n).padStart(2, '0');
 
 export default function App() {
   // Video Intro / Loader state (transitions after 9 seconds)
@@ -93,7 +295,7 @@ export default function App() {
   };
 
   return (
-    <div className="relative min-h-screen bg-alabaster text-forest font-sans overflow-x-hidden">
+    <div className="relative min-h-screen bg-alabaster text-forest font-sans overflow-x-clip">
 
       {/* Initial Video Intro Loader (9s with smooth transition) */}
       {isLoading && <VideoLoader onComplete={() => setIsLoading(false)} />}
@@ -239,8 +441,8 @@ export default function App() {
             <AnimatedContent distance={80} direction="vertical" duration={0.9} delay={0.3}>
               <p className="text-lg md:text-xl text-forest/80 font-sans leading-relaxed max-w-xl mb-10">
                 Anusha Sirigiri is a results-driven digital specialist based in Hyderabad.
-                She craft SEO-friendly campaigns, refines content models, and engineers modern search visibility
-                to drive user-centered, sustainable growth. 
+                She crafts SEO-friendly campaigns, refines content models, and engineers modern search visibility
+                to drive user-centered, sustainable growth.
               </p>
             </AnimatedContent>
 
@@ -308,341 +510,80 @@ export default function App() {
       </div>
 
       {/* 3.5. IMPACT & ACHIEVEMENTS SECTION (SCROLL STACK) */}
-      <section id="impact" className="pt-20 md:pt-28 pb-0 px-6 md:px-12 bg-[#F2F0EB]/40 border-y border-stoneBorder/40 overflow-hidden">
+      <section id="impact" className="pt-20 md:pt-18 pb-0 px-6 md:px-12 bg-[#F2F0EB]/40 border-y border-stoneBorder/40 overflow-hidden">
         <div className="max-w-7xl mx-auto">
-          {/* Section Header */}
-          <div className="text-center max-w-3xl mx-auto mb-6 md:mb-10">
-            <AnimatedContent distance={60} direction="vertical" duration={0.8}>
-              <div className="inline-flex items-center gap-2 mb-4">
-                <span className="w-8 h-[1px] bg-sage" />
-                <span className="text-sm font-sans tracking-widest uppercase text-sage font-medium">
-                  Proven Track Record
-                </span>
-                <span className="w-8 h-[1px] bg-sage" />
-              </div>
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif text-forest leading-tight mb-4">
-                Impact &amp; <span className="italic font-normal text-terracotta">Achievements</span>
-              </h2>
-              <p className="text-base md:text-lg text-forest/75 font-sans leading-relaxed">
-                WhiteScholars — Growth & Achievements Key growth milestones and measurable results from my digital marketing journey at WhiteScholars.
-              </p>
-            </AnimatedContent>
-          </div>
-
-          {/* ScrollStack Component */}
+          {/* ScrollStack Component — the section header docks above the cards while they stack */}
           <ScrollStack
             itemDistance={75}
-            itemScale={0.025}
-            itemStackDistance={24}
-            stackPosition="18%"
-            scaleEndPosition="8%"
-            baseScale={0.88}
+            itemScale={0.04}
+            itemStackDistance={22}
+            maxVisible={3}
+            topOffset={80}
+            holdDistance="30%"
             useWindowScroll={true}
             className="max-w-4xl mx-auto"
+            header={
+              <div className="text-center max-w-3xl mx-auto mb-6 md:mb-[-50px]">
+                <AnimatedContent distance={60} direction="vertical" duration={0.8}>
+                  <div className="inline-flex items-center gap-2 mb-4">
+                    <span className="w-8 h-[1px] bg-sage" />
+                    <span className="text-sm font-sans tracking-widest uppercase text-sage font-medium">
+                      Proven Track Record
+                    </span>
+                    <span className="w-8 h-[1px] bg-sage" />
+                  </div>
+                  <h2 data-stack-shrink className="text-4xl md:text-5xl lg:text-6xl font-serif text-forest leading-tight mb-4">
+                    Impact &amp; <span className="italic font-normal text-terracotta">Achievements</span>
+                  </h2>
+                  <p data-stack-fade className="text-base md:text-lg text-forest/75 font-sans leading-relaxed">
+                    WhiteScholars — Growth & Achievements Key growth milestones and measurable results from my digital marketing journey at WhiteScholars.
+                  </p>
+                </AnimatedContent>
+              </div>
+            }
           >
-            {/* Card 1 */}
-            <ScrollStackItem itemClassName="bg-white border border-stoneBorder shadow-soft-xl">
-              <div className="flex flex-col h-full justify-between gap-6">
-                <div className="flex items-center justify-between">
-                  <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-terracotta/10 border border-terracotta/20 text-terracotta text-xs font-semibold uppercase tracking-wider">
-                    <Trophy className="w-3.5 h-3.5" />
-                    <span>Keyword Dominance</span>
+            {ACHIEVEMENTS.map((item, idx) => {
+              const tone = BADGE_TONES[item.tone];
+              const Icon = item.icon;
+              return (
+                <ScrollStackItem key={item.title} itemClassName="bg-white border border-stoneBorder shadow-soft-xl">
+                  <div className="flex flex-col h-full justify-between gap-4 md:gap-6">
+                    <div className="flex items-center justify-between gap-4">
+                      <div className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider ${tone.badge}`}>
+                        <Icon className={`w-3.5 h-3.5 ${item.iconClass ?? ''}`} />
+                        <span>{item.label}</span>
+                      </div>
+                      <span className="font-serif text-sm md:text-base text-sage font-semibold tracking-wider whitespace-nowrap">
+                        {pad2(idx + 1)} / {pad2(ACHIEVEMENTS.length)}
+                      </span>
+                    </div>
+
+                    <div>
+                      <div className="flex flex-wrap items-baseline gap-3 mb-2">
+                        <span className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-forest tracking-tight">
+                          {item.metric}
+                        </span>
+                        <span className={`text-xs md:text-sm font-sans px-2.5 py-0.5 rounded-md font-semibold ${tone.tag}`}>
+                          {item.tag}
+                        </span>
+                      </div>
+                      <h3 className="font-serif text-xl sm:text-2xl font-bold text-forest mb-3">
+                        {item.title}
+                      </h3>
+                      <p className="text-sm md:text-base text-forest/80 font-sans leading-relaxed">
+                        {item.text}
+                      </p>
+                    </div>
+
+                    <div className="flex flex-wrap gap-2 pt-4 border-t border-stoneBorder/60">
+                      {item.pills.map((pill) => (
+                        <span key={pill} className="px-3 py-1 rounded-full bg-[#F2F0EB] text-forest/80 text-xs font-medium">{pill}</span>
+                      ))}
+                    </div>
                   </div>
-                  <span className="font-serif text-sm md:text-base text-sage font-semibold tracking-wider">
-                    01 / 08
-                  </span>
-                </div>
-
-                <div>
-                  <div className="flex flex-wrap items-baseline gap-3 mb-2">
-                    <span className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-forest tracking-tight">
-                      1st Position
-                    </span>
-                    <span className="text-xs md:text-sm font-sans px-2.5 py-0.5 rounded-md bg-terracotta/10 text-terracotta font-semibold">
-                      #1 on Google SERP
-                    </span>
-                  </div>
-                  <h3 className="font-serif text-xl sm:text-2xl font-bold text-forest mb-3">
-                    1st Position — Data Analytics Course in Hyderabad
-                  </h3>
-                  <p className="text-sm md:text-base text-forest/80 font-sans leading-relaxed">
-                    Moved the “Data Analytics Course in Hyderabad” keyword from the Top 10 to #1 position within 6 months through SEO, content optimization, local SEO and backlink strategies.
-                  </p>
-                </div>
-
-                <div className="flex flex-wrap gap-2 pt-4 border-t border-stoneBorder/60">
-                  <span className="px-3 py-1 rounded-full bg-[#F2F0EB] text-forest/80 text-xs font-medium">Top 10 → #1 Position</span>
-                  <span className="px-3 py-1 rounded-full bg-[#F2F0EB] text-forest/80 text-xs font-medium">6 Months Timeline</span>
-                  <span className="px-3 py-1 rounded-full bg-[#F2F0EB] text-forest/80 text-xs font-medium">Local SEO &amp; Backlinks</span>
-                </div>
-              </div>
-            </ScrollStackItem>
-
-            {/* Card 2 */}
-            <ScrollStackItem itemClassName="bg-white border border-stoneBorder shadow-soft-xl">
-              <div className="flex flex-col h-full justify-between gap-6">
-                <div className="flex items-center justify-between">
-                  <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-sage/15 border border-sage/30 text-forest text-xs font-semibold uppercase tracking-wider">
-                    <TrendingUp className="w-3.5 h-3.5 text-sage" />
-                    <span>Search Expansion</span>
-                  </div>
-                  <span className="font-serif text-sm md:text-base text-sage font-semibold tracking-wider">
-                    02 / 08
-                  </span>
-                </div>
-
-                <div>
-                  <div className="flex flex-wrap items-baseline gap-3 mb-2">
-                    <span className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-forest tracking-tight">
-                      1.7K Organic Traffic
-                    </span>
-                    <span className="text-xs md:text-sm font-sans px-2.5 py-0.5 rounded-md bg-sage/15 text-forest font-semibold">
-                      1600%+ Growth
-                    </span>
-                  </div>
-                  <h3 className="font-serif text-xl sm:text-2xl font-bold text-forest mb-3">
-                    1.7K Organic Traffic
-                  </h3>
-                  <p className="text-sm md:text-base text-forest/80 font-sans leading-relaxed">
-                    Grew website organic traffic from approximately 100 to 1.7K within one year through keyword strategy, content optimization, technical SEO and continuous search performance improvements.
-                  </p>
-                </div>
-
-                <div className="flex flex-wrap gap-2 pt-4 border-t border-stoneBorder/60">
-                  <span className="px-3 py-1 rounded-full bg-[#F2F0EB] text-forest/80 text-xs font-medium">100 → 1.7K Monthly Visits</span>
-                  <span className="px-3 py-1 rounded-full bg-[#F2F0EB] text-forest/80 text-xs font-medium">1 Year Trajectory</span>
-                  <span className="px-3 py-1 rounded-full bg-[#F2F0EB] text-forest/80 text-xs font-medium">Technical SEO &amp; Content</span>
-                </div>
-              </div>
-            </ScrollStackItem>
-
-            {/* Card 3 */}
-            <ScrollStackItem itemClassName="bg-white border border-stoneBorder shadow-soft-xl">
-              <div className="flex flex-col h-full justify-between gap-6">
-                <div className="flex items-center justify-between">
-                  <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-forest/10 border border-forest/20 text-forest text-xs font-semibold uppercase tracking-wider">
-                    <Globe className="w-3.5 h-3.5 text-sage" />
-                    <span>Domain Authority</span>
-                  </div>
-                  <span className="font-serif text-sm md:text-base text-sage font-semibold tracking-wider">
-                    03 / 08
-                  </span>
-                </div>
-
-                <div>
-                  <div className="flex flex-wrap items-baseline gap-3 mb-2">
-                    <span className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-forest tracking-tight">
-                      DR 9 → DR 27
-                    </span>
-                    <span className="text-xs md:text-sm font-sans px-2.5 py-0.5 rounded-md bg-forest/10 text-forest font-semibold">
-                      3X Authority Surge
-                    </span>
-                  </div>
-                  <h3 className="font-serif text-xl sm:text-2xl font-bold text-forest mb-3">
-                    DR 9 → DR 27
-                  </h3>
-                  <p className="text-sm md:text-base text-forest/80 font-sans leading-relaxed">
-                    Improved the website's Domain Rating from 9 to 27 through a focused backlink-building and off-page SEO strategy.
-                  </p>
-                </div>
-
-                <div className="flex flex-wrap gap-2 pt-4 border-t border-stoneBorder/60">
-                  <span className="px-3 py-1 rounded-full bg-[#F2F0EB] text-forest/80 text-xs font-medium">+200% Authority Growth</span>
-                  <span className="px-3 py-1 rounded-full bg-[#F2F0EB] text-forest/80 text-xs font-medium">High-Quality Backlinks</span>
-                  <span className="px-3 py-1 rounded-full bg-[#F2F0EB] text-forest/80 text-xs font-medium">Off-Page SEO Strategy</span>
-                </div>
-              </div>
-            </ScrollStackItem>
-
-            {/* Card 4 */}
-            <ScrollStackItem itemClassName="bg-white border border-stoneBorder shadow-soft-xl">
-              <div className="flex flex-col h-full justify-between gap-6">
-                <div className="flex items-center justify-between">
-                  <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-terracotta/10 border border-terracotta/20 text-terracotta text-xs font-semibold uppercase tracking-wider">
-                    <Users className="w-3.5 h-3.5" />
-                    <span>Social Proof &amp; Local Pack</span>
-                  </div>
-                  <span className="font-serif text-sm md:text-base text-sage font-semibold tracking-wider">
-                    04 / 08
-                  </span>
-                </div>
-
-                <div>
-                  <div className="flex flex-wrap items-baseline gap-3 mb-2">
-                    <span className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-forest tracking-tight">
-                      500+ Google Reviews
-                    </span>
-                    <span className="text-xs md:text-sm font-sans px-2.5 py-0.5 rounded-md bg-terracotta/10 text-terracotta font-semibold">
-                      5X Review Growth
-                    </span>
-                  </div>
-                  <h3 className="font-serif text-xl sm:text-2xl font-bold text-forest mb-3">
-                    500+ Google Reviews
-                  </h3>
-                  <p className="text-sm md:text-base text-forest/80 font-sans leading-relaxed">
-                    Helped grow the Google Business Profile from 100+ reviews to 500+ reviews, strengthening the brand's local search presence and online reputation.
-                  </p>
-                </div>
-
-                <div className="flex flex-wrap gap-2 pt-4 border-t border-stoneBorder/60">
-                  <span className="px-3 py-1 rounded-full bg-[#F2F0EB] text-forest/80 text-xs font-medium">100+ → 500+ Reviews</span>
-                  <span className="px-3 py-1 rounded-full bg-[#F2F0EB] text-forest/80 text-xs font-medium">Google Business Profile</span>
-                  <span className="px-3 py-1 rounded-full bg-[#F2F0EB] text-forest/80 text-xs font-medium">Local Search Authority</span>
-                </div>
-              </div>
-            </ScrollStackItem>
-
-            {/* Card 5 */}
-            <ScrollStackItem itemClassName="bg-white border border-stoneBorder shadow-soft-xl">
-              <div className="flex flex-col h-full justify-between gap-6">
-                <div className="flex items-center justify-between">
-                  <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-sage/15 border border-sage/30 text-forest text-xs font-semibold uppercase tracking-wider">
-                    <Star className="w-3.5 h-3.5 text-terracotta fill-terracotta" />
-                    <span>Reputation &amp; Trust</span>
-                  </div>
-                  <span className="font-serif text-sm md:text-base text-sage font-semibold tracking-wider">
-                    05 / 08
-                  </span>
-                </div>
-
-                <div>
-                  <div className="flex flex-wrap items-baseline gap-3 mb-2">
-                    <span className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-forest tracking-tight">
-                      4.7★ → 4.8★ Rating
-                    </span>
-                    <span className="text-xs md:text-sm font-sans px-2.5 py-0.5 rounded-md bg-sage/15 text-forest font-semibold">
-                      High Customer Trust
-                    </span>
-                  </div>
-                  <h3 className="font-serif text-xl sm:text-2xl font-bold text-forest mb-3">
-                    4.7★ → 4.8★ Rating
-                  </h3>
-                  <p className="text-sm md:text-base text-forest/80 font-sans leading-relaxed">
-                    Contributed to improving the Google Business Profile rating from 4.7 to 4.8 stars while maintaining a strong review acquisition and reputation strategy.
-                  </p>
-                </div>
-
-                <div className="flex flex-wrap gap-2 pt-4 border-t border-stoneBorder/60">
-                  <span className="px-3 py-1 rounded-full bg-[#F2F0EB] text-forest/80 text-xs font-medium">4.8 Star Sentiment</span>
-                  <span className="px-3 py-1 rounded-full bg-[#F2F0EB] text-forest/80 text-xs font-medium">Review Acquisition Strategy</span>
-                  <span className="px-3 py-1 rounded-full bg-[#F2F0EB] text-forest/80 text-xs font-medium">Brand Sentiment</span>
-                </div>
-              </div>
-            </ScrollStackItem>
-
-            {/* Card 6 */}
-            <ScrollStackItem itemClassName="bg-white border border-stoneBorder shadow-soft-xl">
-              <div className="flex flex-col h-full justify-between gap-6">
-                <div className="flex items-center justify-between">
-                  <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-forest/10 border border-forest/20 text-forest text-xs font-semibold uppercase tracking-wider">
-                    <Target className="w-3.5 h-3.5 text-forest" />
-                    <span>Competitive Search</span>
-                  </div>
-                  <span className="font-serif text-sm md:text-base text-sage font-semibold tracking-wider">
-                    06 / 08
-                  </span>
-                </div>
-
-                <div>
-                  <div className="flex flex-wrap items-baseline gap-3 mb-2">
-                    <span className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-forest tracking-tight">
-                      Top 10 Rankings
-                    </span>
-                    <span className="text-xs md:text-sm font-sans px-2.5 py-0.5 rounded-md bg-forest/10 text-forest font-semibold">
-                      Tech Keyword Cluster
-                    </span>
-                  </div>
-                  <h3 className="font-serif text-xl sm:text-2xl font-bold text-forest mb-3">
-                    Top 10 Rankings
-                  </h3>
-                  <p className="text-sm md:text-base text-forest/80 font-sans leading-relaxed">
-                    Improved the search visibility of Data Science and Digital Marketing course-related keywords, achieving Top 10 rankings in a competitive Hyderabad market.
-                  </p>
-                </div>
-
-                <div className="flex flex-wrap gap-2 pt-4 border-t border-stoneBorder/60">
-                  <span className="px-3 py-1 rounded-full bg-[#F2F0EB] text-forest/80 text-xs font-medium">Data Science &amp; Digital Marketing</span>
-                  <span className="px-3 py-1 rounded-full bg-[#F2F0EB] text-forest/80 text-xs font-medium">Competitive Market</span>
-                  <span className="px-3 py-1 rounded-full bg-[#F2F0EB] text-forest/80 text-xs font-medium">SERP Visibility</span>
-                </div>
-              </div>
-            </ScrollStackItem>
-
-            {/* Card 7 */}
-            <ScrollStackItem itemClassName="bg-white border border-stoneBorder shadow-soft-xl">
-              <div className="flex flex-col h-full justify-between gap-6">
-                <div className="flex items-center justify-between">
-                  <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-terracotta/10 border border-terracotta/20 text-terracotta text-xs font-semibold uppercase tracking-wider">
-                    <ArrowUpRight className="w-3.5 h-3.5" />
-                    <span>Paid Search &amp; ROAS</span>
-                  </div>
-                  <span className="font-serif text-sm md:text-base text-sage font-semibold tracking-wider">
-                    07 / 08
-                  </span>
-                </div>
-
-                <div>
-                  <div className="flex flex-wrap items-baseline gap-3 mb-2">
-                    <span className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-forest tracking-tight">
-                      ₹60K → ₹1.2L
-                    </span>
-                    <span className="text-xs md:text-sm font-sans px-2.5 py-0.5 rounded-md bg-terracotta/10 text-terracotta font-semibold">
-                      2X ROAS
-                    </span>
-                  </div>
-                  <h3 className="font-serif text-xl sm:text-2xl font-bold text-forest mb-3">
-                    ₹60K → ₹1.2L Through Google Ads
-                  </h3>
-                  <p className="text-sm md:text-base text-forest/80 font-sans leading-relaxed">
-                    Started working on Google Ads campaigns with approximately ₹60,000 in ad spend and generated ₹1,20,000 in returns, delivering approximately 2X ROAS, based on tracked campaign results.
-                  </p>
-                </div>
-
-                <div className="flex flex-wrap gap-2 pt-4 border-t border-stoneBorder/60">
-                  <span className="px-3 py-1 rounded-full bg-[#F2F0EB] text-forest/80 text-xs font-medium">₹60K Ad Spend</span>
-                  <span className="px-3 py-1 rounded-full bg-[#F2F0EB] text-forest/80 text-xs font-medium">₹1,20,000 Returns</span>
-                  <span className="px-3 py-1 rounded-full bg-[#F2F0EB] text-forest/80 text-xs font-medium">2X ROAS Efficiency</span>
-                </div>
-              </div>
-            </ScrollStackItem>
-
-            {/* Card 8 */}
-            <ScrollStackItem itemClassName="bg-white border border-stoneBorder shadow-soft-xl">
-              <div className="flex flex-col h-full justify-between gap-6">
-                <div className="flex items-center justify-between">
-                  <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-forest text-alabaster text-xs font-semibold uppercase tracking-wider">
-                    <Users className="w-3.5 h-3.5 text-sage" />
-                    <span>Leadership &amp; Scaling</span>
-                  </div>
-                  <span className="font-serif text-sm md:text-base text-sage font-semibold tracking-wider">
-                    08 / 08
-                  </span>
-                </div>
-
-                <div>
-                  <div className="flex flex-wrap items-baseline gap-3 mb-2">
-                    <span className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-forest tracking-tight">
-                      Solo → Team of 5
-                    </span>
-                    <span className="text-xs md:text-sm font-sans px-2.5 py-0.5 rounded-md bg-forest/10 text-forest font-semibold">
-                      Leadership Growth
-                    </span>
-                  </div>
-                  <h3 className="font-serif text-xl sm:text-2xl font-bold text-forest mb-3">
-                    From Solo SEO to a Team of 5
-                  </h3>
-                  <p className="text-sm md:text-base text-forest/80 font-sans leading-relaxed">
-                    Started at WhiteScholars as the sole SEO Analyst, managing the SEO function independently. As the digital marketing function grew, progressed into a leadership role and now work with a 5-member digital marketing team, including myself.
-                  </p>
-                </div>
-
-                <div className="flex flex-wrap gap-2 pt-4 border-t border-stoneBorder/60">
-                  <span className="px-3 py-1 rounded-full bg-[#F2F0EB] text-forest/80 text-xs font-medium">WhiteScholars SEO Lead</span>
-                  <span className="px-3 py-1 rounded-full bg-[#F2F0EB] text-forest/80 text-xs font-medium">5-Member Marketing Team</span>
-                  <span className="px-3 py-1 rounded-full bg-[#F2F0EB] text-forest/80 text-xs font-medium">Mentorship &amp; Management</span>
-                </div>
-              </div>
-            </ScrollStackItem>
+                </ScrollStackItem>
+              );
+            })}
           </ScrollStack>
         </div>
       </section>
@@ -663,9 +604,14 @@ export default function App() {
                   Fusing analytical depth with <span className="italic font-normal text-terracotta">creative</span> strategy.
                 </h2>
                 <p className="text-base md:text-lg text-forest/80 font-sans leading-relaxed mb-6">
-                  With a background in Commerce (B.Com) combined with technical training in Search Engine Optimization,
+                  With a background in Commerce (B.Com) and an MBA in Marketing, combined with technical training in Search Engine Optimization,
                   I bridge the gap between business objectives and search ranking algorithms. My approach is structured,
                   relying heavily on raw metrics, keyword analytics, and user engagement behaviors to build growth blueprints.
+                </p>
+                <p className="text-base md:text-lg text-forest/80 font-sans leading-relaxed mb-6">
+                  My career has progressed from SEO-focused execution to managing digital marketing, paid campaigns and a team,
+                  across SEO, local SEO, Google Business Profile, online reputation management, Google Ads, Meta Ads and lead generation.
+                  I also deliver Digital Marketing training, explaining concepts through practical examples and activities.
                 </p>
                 <p className="text-base md:text-lg text-forest/80 font-sans leading-relaxed mb-8">
                   Beyond keywords, I am deeply interested in web accessibility and clean visual design. I advocate for responsive
@@ -762,18 +708,101 @@ export default function App() {
       <section id="experience" className="py-24 md:py-20 bg-[#F2F0EB]/60 border-y border-stoneBorder/50 px-6 md:px-12">
         <div className="max-w-7xl mx-auto">
 
+          {/* Current role: WhiteScholars */}
           <AnimatedContent distance={80} direction="vertical" duration={0.9}>
-            <div className="max-w-3xl mb-16 md:mb-24">
+            <div className="max-w-3xl mb-10 md:mb-12">
               <div className="inline-flex items-center gap-2 mb-6">
                 <span className="w-8 h-[1px] bg-sage" />
                 <span className="text-sm font-sans tracking-widest uppercase text-sage font-medium">Professional Path</span>
               </div>
               <h2 className="text-4xl md:text-5xl font-serif text-forest leading-tight mb-6">
-                Core Expertise in <span className="italic font-normal text-terracotta">Oxygen Ites</span>
+                Leading Growth at <span className="italic font-normal text-terracotta">WhiteScholars</span>
               </h2>
-              <p className="text-base md:text-lg text-forest/75 font-sans">
-                Currently working as a Digital Marketing (SEO Analyst) at Oxygen Ites Pvt Ltd (July 2024 - Present).
-                My responsibility is divided into three key verticals: Search Engine Optimization, Content Strategy, and Responsive UX Layout Auditing.
+              <p className="text-base md:text-lg text-forest/75 font-sans leading-relaxed">
+                Currently working as Digital Marketing Manager &amp; Digital Marketing Trainer at <strong className="font-bold text-forest">WhiteScholars</strong>, Hyderabad (Jul 2025 – Present),
+                leading SEO, local SEO, online reputation and paid campaigns while delivering Digital Marketing training.
+              </p>
+            </div>
+          </AnimatedContent>
+
+          <AnimatedContent distance={90} direction="vertical" duration={0.9} delay={0.15}>
+            <div className="bg-white border border-stoneBorder rounded-[32px] md:rounded-[40px] overflow-hidden shadow-soft-lg grid grid-cols-1 lg:grid-cols-12">
+
+              {/* Role summary panel */}
+              <div className="lg:col-span-4 bg-forest text-alabaster p-8 md:p-10 flex flex-col justify-between gap-8">
+                <div>
+                  <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-alabaster/10 border border-alabaster/15 text-[11px] uppercase tracking-widest font-semibold">
+                    <span className="w-1.5 h-1.5 rounded-full bg-terracotta animate-pulse" />
+                    Current Role
+                  </span>
+                  <h3 className="font-serif text-2xl md:text-3xl font-bold leading-tight mt-5 mb-2">
+                    Digital Marketing Manager <span className="italic font-normal text-clay">&amp; Trainer</span>
+                  </h3>
+                  <p className="text-sm text-alabaster/70">Jul 2025 – Present · Hyderabad</p>
+                </div>
+
+                {/* Career progression */}
+                <ol className="relative border-l border-alabaster/20 ml-1.5 space-y-4">
+                  {[
+                    ['Digital Marketing Executive', 'Joined with an SEO focus'],
+                    ['Digital Marketing Manager', 'Leading the team & paid campaigns'],
+                    ['Digital Marketing Trainer', 'Training sessions & learner assessments'],
+                  ].map(([role, note], idx) => (
+                    <li key={role} className="pl-5 relative">
+                      <span className={`absolute -left-[5px] top-1.5 w-2.5 h-2.5 rounded-full ${idx === 0 ? 'bg-sage' : 'bg-terracotta'}`} />
+                      <p className="text-sm font-semibold">{role}</p>
+                      <p className="text-xs text-alabaster/60">{note}</p>
+                    </li>
+                  ))}
+                </ol>
+
+                {/* Key achievement */}
+                <div className="rounded-2xl bg-alabaster/[0.06] border border-alabaster/15 p-5 flex items-center gap-4">
+                  <span className="font-serif text-5xl font-bold text-terracotta leading-none">2x</span>
+                  <p className="text-xs text-alabaster/80 leading-relaxed">
+                    <span className="block uppercase tracking-widest text-[10px] text-sage font-semibold mb-1">Key Achievement</span>
+                    Revenue growth through digital marketing &amp; Google Ads campaigns
+                  </p>
+                </div>
+              </div>
+
+              {/* Responsibilities */}
+              <div className="lg:col-span-8 p-8 md:p-10 grid grid-cols-1 sm:grid-cols-2 gap-8">
+                {WHITESCHOLARS_FOCUS.map(({ icon: Icon, title, points }) => (
+                  <div key={title}>
+                    <div className="flex items-center gap-3 mb-4">
+                      <span className="w-9 h-9 rounded-xl bg-alabaster border border-stoneBorder flex items-center justify-center text-terracotta flex-shrink-0">
+                        <Icon className="w-4 h-4" strokeWidth={1.75} />
+                      </span>
+                      <h4 className="font-serif text-lg font-bold text-forest">{title}</h4>
+                    </div>
+                    <ul className="space-y-2.5">
+                      {points.map((point) => (
+                        <li key={point} className="flex gap-2.5 items-start text-sm text-forest/80 leading-relaxed">
+                          <Check className="w-4 h-4 text-terracotta flex-shrink-0 mt-0.5" strokeWidth={2} />
+                          <span>{point}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </AnimatedContent>
+
+          {/* Previous role: Oxygen ITES */}
+          <AnimatedContent distance={80} direction="vertical" duration={0.9}>
+            <div className="max-w-3xl mt-16 md:mt-20 mb-12 md:mb-16">
+              <div className="inline-flex items-center gap-2 mb-6">
+                <span className="w-8 h-[1px] bg-sage" />
+                <span className="text-sm font-sans tracking-widest uppercase text-sage font-medium">Previous Role</span>
+              </div>
+              <h2 className="text-4xl md:text-5xl font-serif text-forest leading-tight mb-6">
+                Core Expertise in <span className="italic font-normal text-terracotta">Oxygen ITES</span>
+              </h2>
+              <p className="text-base md:text-lg text-forest/75 font-sans leading-relaxed">
+                Worked as a Digital Marketing Executive (SEO Analyst) at <strong className="font-bold text-forest">Oxygen ITES Pvt. Ltd.</strong>, Hyderabad (Jun 2024 – Jul 2025).
+                My responsibility was divided into three key verticals: Search Engine Optimization, Content Strategy, and Responsive UX Layout Auditing.
               </p>
             </div>
           </AnimatedContent>
@@ -861,8 +890,29 @@ export default function App() {
 
           </div>
 
-          {/* Stagger spacer for layout */}
-          <div className="hidden md:block h-16" />
+          {/* Tools & Technologies (clears the staggered middle card on md+) */}
+          <AnimatedContent distance={80} direction="vertical" duration={0.8} delay={0.1}>
+            <div className="mt-12 md:mt-24 bg-white border border-stoneBorder rounded-3xl p-8 md:p-10 shadow-soft-sm">
+              <h3 className="font-serif text-2xl md:text-3xl font-bold text-forest mb-8">
+                Tools &amp; <span className="italic font-normal text-terracotta">Technologies</span>
+              </h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-0 lg:divide-x divide-stoneBorder">
+                {TOOLS_AND_TECH.map(({ icon: Icon, category, tools }) => (
+                  <div key={category} className="lg:px-6 lg:first:pl-0 lg:last:pr-0">
+                    <div className="flex items-start gap-2 mb-3 lg:min-h-[2.125rem]">
+                      <Icon className="w-4 h-4 text-terracotta flex-shrink-0 mt-px" strokeWidth={1.75} />
+                      <h4 className="text-xs font-sans tracking-widest uppercase text-forest font-semibold leading-snug">{category}</h4>
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      {tools.map((tool) => (
+                        <span key={tool} className="px-3 py-1.5 rounded-full bg-[#F2F0EB] text-forest/85 text-xs font-medium">{tool}</span>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </AnimatedContent>
 
         </div>
       </section>
@@ -995,8 +1045,31 @@ export default function App() {
             {/* Grid of tools and skills */}
             <div className="lg:col-span-8 space-y-12">
 
-              {/* Category 1: Tools & Software */}
+              {/* Category 0: Core Skills (from resume) */}
               <AnimatedContent distance={80} direction="vertical" duration={0.8} delay={0.1}>
+                <div>
+                  <h3 className="font-serif text-xl font-bold text-forest mb-6 flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-terracotta" />
+                    <span>Core Skills</span>
+                  </h3>
+
+                  <div className="bg-white border border-stoneBorder rounded-2xl divide-y divide-stoneBorder/70 shadow-soft-sm">
+                    {CORE_SKILLS.map(({ group, skills }) => (
+                      <div key={group} className="p-5 flex flex-col sm:flex-row gap-3 sm:gap-6">
+                        <span className="sm:w-40 flex-shrink-0 text-xs uppercase tracking-widest text-sage font-semibold sm:pt-1.5">{group}</span>
+                        <div className="flex flex-wrap gap-2">
+                          {skills.map((skill) => (
+                            <span key={skill} className="px-3 py-1.5 rounded-full bg-[#F2F0EB] text-forest/85 text-xs font-medium">{skill}</span>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </AnimatedContent>
+
+              {/* Category 1: Tools & Software */}
+              <AnimatedContent distance={80} direction="vertical" duration={0.8} delay={0.2}>
                 <div>
                   <h3 className="font-serif text-xl font-bold text-forest mb-6 flex items-center gap-2">
                     <span className="w-2 h-2 rounded-full bg-terracotta" />
@@ -1007,10 +1080,12 @@ export default function App() {
                     {[
                       { name: "Google Analytics", desc: "User acquisition flow & behavior monitoring" },
                       { name: "Google Search Console", desc: "Index monitoring, crawl fixes & sitemap checks" },
+                      { name: "Google Ads", desc: "Lead-gen campaigns: targeting, keywords, ad copy & conversions" },
+                      { name: "Meta Ads Manager", desc: "Paid social campaign planning, execution & monitoring" },
                       { name: "SEMrush", desc: "Keyword gaps, backlink research & domain analysis" },
                       { name: "Ahrefs", desc: "Competitive audits, keyword planner extraction" },
-                      { name: "Keyword Planner", desc: "Search density modeling & bid estimation" },
-                      { name: "Answer the Public", desc: "Intent questions and editorial outlines mapping" }
+                      { name: "Google Keyword Planner", desc: "Search density modeling & bid estimation" },
+                      { name: "AnswerThePublic", desc: "Intent questions and editorial outlines mapping" }
                     ].map((tool, idx) => (
                       <div key={idx} className="bg-white border border-stoneBorder rounded-2xl p-5 hover:shadow-soft-sm transition-all duration-300">
                         <h4 className="font-serif text-base font-bold text-forest mb-1">{tool.name}</h4>
@@ -1022,7 +1097,7 @@ export default function App() {
               </AnimatedContent>
 
               {/* Category 2: Technical & Soft Skills */}
-              <AnimatedContent distance={80} direction="vertical" duration={0.8} delay={0.25}>
+              <AnimatedContent distance={80} direction="vertical" duration={0.8} delay={0.3}>
                 <div>
                   <h3 className="font-serif text-xl font-bold text-forest mb-6 flex items-center gap-2">
                     <span className="w-2 h-2 rounded-full bg-sage" />
@@ -1108,79 +1183,44 @@ export default function App() {
             </div>
           </AnimatedContent>
 
-          {/* Timeline Cards Container */}
+          {/* Timeline Cards Container (zig-zag on sm+, stacked on mobile) */}
           <div className="relative max-w-3xl mx-auto">
             {/* Organic timeline line */}
-            <div className="absolute left-4 sm:left-1/2 top-4 bottom-4 w-[1px] bg-dashed bg-stoneBorder transform -translate-x-1/2 hidden sm:block" style={{ borderLeft: '1px dashed #E6E2DA' }} />
+            <div className="absolute left-1/2 top-4 bottom-4 -translate-x-1/2 border-l border-dashed border-stoneBorder hidden sm:block" />
 
-            <div className="space-y-12">
+            <div className="flex flex-col gap-6">
+              {EDUCATION.map((edu, idx) => (
+                <AnimatedContent
+                  key={edu.degree}
+                  distance={80}
+                  direction="vertical"
+                  duration={0.8}
+                  delay={0.1 + idx * 0.12}
+                  className={`w-full ${idx > 0 ? 'sm:-mt-20' : ''}`}
+                >
+                  <div className={`relative flex flex-col sm:flex-row items-start ${idx % 2 ? 'sm:justify-end' : 'sm:justify-start'}`}>
+                    {/* Timeline node */}
+                    <div className={`absolute left-1/2 top-8 w-4 h-4 rounded-full ${edu.dot} border-4 border-alabaster -translate-x-1/2 z-10 hidden sm:block`} />
 
-              {/* Education Block 1 (Left on desktop) */}
-              <AnimatedContent distance={80} direction="vertical" duration={0.8} delay={0.1}>
-                <div className="relative flex flex-col sm:flex-row sm:justify-start items-start">
-                  {/* Timeline node */}
-                  <div className="absolute left-4 sm:left-1/2 w-4 h-4 rounded-full bg-forest border-4 border-alabaster transform -translate-x-1/2 z-10 hidden sm:block" />
+                    <div className="w-full sm:w-[45%] bg-white border border-stoneBorder p-6 md:p-8 rounded-3xl shadow-soft-sm hover:-translate-y-1 transition-all duration-300">
+                      <div className="flex justify-between items-start gap-3 mb-4">
+                        <span className="text-xs uppercase tracking-widest font-semibold text-sage font-sans">{edu.period}</span>
+                        <span className="px-3 py-1 rounded-full bg-sage/10 text-sage text-xs font-bold font-sans whitespace-nowrap">{edu.score}</span>
+                      </div>
 
-                  <div className="w-full sm:w-[45%] bg-white border border-stoneBorder p-8 rounded-3xl shadow-soft-sm hover:-translate-y-1 transition-all duration-300">
-                    <div className="flex justify-between items-start mb-4">
-                      <span className="text-xs uppercase tracking-widest font-semibold text-sage font-sans">2021 - 2024</span>
-                      <span className="px-3 py-1 rounded-full bg-sage/10 text-sage text-xs font-bold font-sans">CGPA: 85%</span>
+                      <h3 className="font-serif text-xl font-bold text-forest mb-2 flex flex-wrap items-center gap-x-3 gap-y-1">
+                        <span>{edu.degree}</span>
+                        {edu.status && (
+                          <span className="px-2.5 py-0.5 rounded-full bg-terracotta/10 text-terracotta text-[11px] font-sans font-semibold uppercase tracking-wider">{edu.status}</span>
+                        )}
+                      </h3>
+                      <h4 className="text-sm text-forest/70 font-sans mb-4">{edu.school}</h4>
+
+                      <p className="text-xs text-forest/60 leading-relaxed font-sans">{edu.note}</p>
                     </div>
-
-                    <h3 className="font-serif text-xl font-bold text-forest mb-2">Bachelor of Commerce</h3>
-                    <h4 className="text-sm text-forest/70 font-sans mb-4">Indira Priyadarshini Government Degree College for Women</h4>
-
-                    <p className="text-xs text-forest/60 leading-relaxed font-sans">
-                      Acquired functional insights in market economics, business accounts, and digital administration, mapping out commercial methodologies.
-                    </p>
                   </div>
-                </div>
-              </AnimatedContent>
-
-              {/* Education Block 2 (Right on desktop) */}
-              <AnimatedContent distance={80} direction="vertical" duration={0.8} delay={0.25}>
-                <div className="relative flex flex-col sm:flex-row sm:justify-end items-start">
-                  {/* Timeline node */}
-                  <div className="absolute left-4 sm:left-1/2 w-4 h-4 rounded-full bg-sage border-4 border-alabaster transform -translate-x-1/2 z-10 hidden sm:block" />
-
-                  <div className="w-full sm:w-[45%] bg-white border border-stoneBorder p-8 rounded-3xl shadow-soft-sm hover:-translate-y-1 transition-all duration-300">
-                    <div className="flex justify-between items-start mb-4">
-                      <span className="text-xs uppercase tracking-widest font-semibold text-sage font-sans">2019 - 2021</span>
-                      <span className="px-3 py-1 rounded-full bg-sage/10 text-sage text-xs font-bold font-sans">CGPA: 82%</span>
-                    </div>
-
-                    <h3 className="font-serif text-xl font-bold text-forest mb-2">Intermediate Education</h3>
-                    <h4 className="text-sm text-forest/70 font-sans mb-4">Mahaboobia Junior College for Girls</h4>
-
-                    <p className="text-xs text-forest/60 leading-relaxed font-sans">
-                      Completed higher secondary coursework with distinction, focusing on trade principles and organizational coordination.
-                    </p>
-                  </div>
-                </div>
-              </AnimatedContent>
-
-              {/* Education Block 3 (Left on desktop) */}
-              <AnimatedContent distance={80} direction="vertical" duration={0.8} delay={0.4}>
-                <div className="relative flex flex-col sm:flex-row sm:justify-start items-start">
-                  {/* Timeline node */}
-                  <div className="absolute left-4 sm:left-1/2 w-4 h-4 rounded-full bg-clay border-4 border-alabaster transform -translate-x-1/2 z-10 hidden sm:block" />
-
-                  <div className="w-full sm:w-[45%] bg-white border border-stoneBorder p-8 rounded-3xl shadow-soft-sm hover:-translate-y-1 transition-all duration-300">
-                    <div className="flex justify-between items-start mb-4">
-                      <span className="text-xs uppercase tracking-widest font-semibold text-sage font-sans">2019 Graduation</span>
-                      <span className="px-3 py-1 rounded-full bg-sage/10 text-sage text-xs font-bold font-sans">CGPA: 72%</span>
-                    </div>
-
-                    <h3 className="font-serif text-xl font-bold text-forest mb-2">Secondary School Certificate</h3>
-                    <h4 className="text-sm text-forest/70 font-sans mb-4">Prabodh Girls High School</h4>
-
-                    <p className="text-xs text-forest/60 leading-relaxed font-sans">
-                      Completed basic secondary education syllabus with excellent performance across scientific and linguistic branches.
-                    </p>
-                  </div>
-                </div>
-              </AnimatedContent>
-
+                </AnimatedContent>
+              ))}
             </div>
           </div>
 
@@ -1375,7 +1415,7 @@ export default function App() {
               {/* Declaration Card */}
               <div className="max-w-md text-center md:text-left bg-alabaster/40 border border-stoneBorder/45 p-5 rounded-2xl">
                 <span className="text-[10px] uppercase tracking-widest text-sage font-semibold block mb-1">Formal Declaration</span>
-                <p className="text-[11px] text-forest/65 italic leading-relaxed">
+                <p className="font-serif text-xs text-forest/70 italic leading-relaxed">
                   "I hereby declare that the information provided is true to the best of my knowledge." : Anusha Sirigiri
                 </p>
               </div>

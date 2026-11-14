@@ -19,7 +19,7 @@
 }
 
 .scroll-stack-inner {
-  padding: 10vh 1.5rem 12rem;
+  padding: 10vh 0 2.5rem;
   min-height: 100vh;
   max-width: 72rem;
   margin: 0 auto;
@@ -27,14 +27,31 @@
 
 @media (min-width: 768px) {
   .scroll-stack-inner {
-    padding: 12vh 3rem 14rem;
+    padding: 12vh 3rem 3rem;
   }
 }
 
 @media (min-width: 1024px) {
   .scroll-stack-inner {
-    padding: 14vh 4rem 16rem;
+    padding: 14vh 4rem 3.5rem;
   }
+}
+
+/* Docked header (driven by --stack-header-progress / --stack-header-scale from JS) */
+.scroll-stack-header {
+  position: relative;
+  z-index: 0;
+  will-change: transform;
+}
+
+.scroll-stack-header [data-stack-shrink] {
+  transform-origin: top center;
+  transform: scale(calc(1 - (1 - var(--stack-header-scale, 1)) * var(--stack-header-progress, 0)));
+}
+
+.scroll-stack-header [data-stack-fade] {
+  opacity: calc(1 - var(--stack-header-progress, 0) * 1.6);
+  transform: translateY(calc(var(--stack-header-progress, 0) * -14px));
 }
 
 .scroll-stack-card-wrapper {
@@ -43,15 +60,15 @@
 
 .scroll-stack-card {
   transform-origin: top center;
-  will-change: transform, filter;
+  will-change: transform, opacity;
   backface-visibility: hidden;
   transform-style: preserve-3d;
   box-shadow: 0 20px 50px -12px rgba(45, 58, 49, 0.12), 0 0 0 1px rgba(230, 226, 218, 0.8);
-  min-height: 18rem;
+  min-height: 16rem;
   width: 100%;
   margin: 20px 0;
-  padding: 2.5rem 2rem;
-  border-radius: 36px;
+  padding: 1.75rem 1.5rem;
+  border-radius: 28px;
   box-sizing: border-box;
   /* Improve mobile performance */
   -webkit-transform: translateZ(0);
@@ -71,5 +88,5 @@
 
 .scroll-stack-end {
   width: 100%;
-  height: 1px;
+  height: 0;
 }

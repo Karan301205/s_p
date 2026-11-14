@@ -16,7 +16,7 @@ export default {
       },
       fontFamily: {
         serif: ['"Playfair Display"', 'serif'],
-        sans: ['"Source Sans 3"', 'sans-serif'],
+        sans: ['Poppins', 'sans-serif'],
       },
       borderRadius: {
         '4xl': '32px',
